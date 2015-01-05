@@ -1,10 +1,10 @@
 set enc=utf-8
 
 filetype off
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
+Bundle 'gmarik/Vundle.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'scrooloose/nerdcommenter'
@@ -18,6 +18,7 @@ Bundle 'groenewege/vim-less'
 "Bundle 'majutsushi/tagbar'
 "Bundle 'ScrollColors'
 Bundle 'jelera/vim-javascript-syntax'
+Bundle 'pyte'
 
 " let g:vim_tags_project_tags_command = "/usr/local/Cellar/ctags/5.8/bin/ctags --sort=yes -R {OPTIONS} {DIRECTORY} 2>/dev/null &"
 " let g:vim_tags_auto_generate = 1
