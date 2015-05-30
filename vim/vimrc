@@ -4,6 +4,7 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
+Plugin 'flazz/vim-colorschemes'
 Bundle 'gmarik/Vundle.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
