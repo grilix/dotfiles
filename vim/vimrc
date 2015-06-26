@@ -4,7 +4,6 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
-Plugin 'flazz/vim-colorschemes'
 Bundle 'gmarik/Vundle.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
@@ -19,7 +18,10 @@ Bundle 'groenewege/vim-less'
 "Bundle 'majutsushi/tagbar'
 "Bundle 'ScrollColors'
 Bundle 'jelera/vim-javascript-syntax'
+" Colors
+Plugin 'flazz/vim-colorschemes'
 Bundle 'pyte'
+Plugin 'industrial'
 
 " let g:vim_tags_project_tags_command = "/usr/local/Cellar/ctags/5.8/bin/ctags --sort=yes -R {OPTIONS} {DIRECTORY} 2>/dev/null &"
 " let g:vim_tags_auto_generate = 1

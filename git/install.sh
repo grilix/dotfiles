@@ -4,4 +4,4 @@ if [ -z $INSTALL_PATH ]; then
   exit -1
 fi
 
-link_file "git/gitignore" ".gitignore"
+link_file "gitignore" ".gitignore"

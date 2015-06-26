@@ -6,8 +6,7 @@ declare -x FORCE="0"
 declare -x BACKUP="1"
 declare -x SOURCE_PATH="`pwd`"
 declare -x INSTALL_PATH="`echo ~`"
-declare -x MODULES="vim git"
-
+declare -x CURRENT_MODULE_PATH="$SOURCE_PATH"
 
 print_flag() { flag="$1"; expected="$2"; text="$3"
   echo -n "  "
@@ -76,13 +75,6 @@ forced() {
 }
 export -f forced
 
-assert() { message="$1"; shift; condition="$@"
-  if ! $condition; then
-    error "ASSERTION FAILED: $message"
-  fi
-}
-export -f assert
-
 delete_link_if_broken() { destination="$1"
   if [ ! -e "$INSTALL_PATH/$original"  -a -L "$INSTALL_PATH/$original" ]; then
     cmd rm "$INSTALL_PATH/$original"
@@ -123,15 +115,16 @@ export -f git_clone
 
 
 link_file() { src=$1; destination=$2
-  if [ "$SOURCE_PATH/$src" -ef "$INSTALL_PATH/$destination" ]; then
+  if [ "$CURRENT_MODULE_PATH/$src" -ef "$INSTALL_PATH/$destination" ]; then
     forced || return
   fi
 
-  assert "Source file $SOURCE_PATH/$src exists" [ -e "$SOURCE_PATH/$src" ]
+  [ -e "$CURRENT_MODULE_PATH/$src" ] ||
+    error "Source file $CURRENT_MODULE_PATH/$src exists"
 
   backup "$destination"
 
-  cmd ln -fs "$SOURCE_PATH/$src" "$INSTALL_PATH/$destination"
+  cmd ln -fs "$CURRENT_MODULE_PATH/$src" "$INSTALL_PATH/$destination"
 }
 export -f link_file
 
@@ -147,15 +140,18 @@ cmd() {
 export -f cmd
 
 create_dir() { path="$1"
-  cmd mkdir -p "$INSTALL_PATH/$path"
+  [ -d "$INSTALL_PATH/$path" ] ||
+    cmd mkdir -p "$INSTALL_PATH/$path"
 }
 export -f create_dir
 
-install_module() {
-  [ ! -f "$1/install.sh" ] &&
-    error "Invalid module: $1"
+install_module() { module="$1"
+  [ ! -f "$module/install.sh" ] &&
+    error "Invalid module: $module"
 
-  bash "$1/install.sh"
+  CURRENT_MODULE_PATH="$SOURCE_PATH/$module"
+  bash "$module/install.sh"
+  CURRENT_MODULE_PATH="$SOURCE_PATH"
 }
 
 CUSTOM_MODULES="0"
@@ -180,13 +176,10 @@ do
     usage
     exit -1
     ;;
+  "") break;;
   *)
-    if [ -n "$1" ]; then
-      CUSTOM_MODULES="1"
-      install_module $1
-    else
-      break
-    fi
+    CUSTOM_MODULES="1"
+    install_module $1
     ;;
   esac
 

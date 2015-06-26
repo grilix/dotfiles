@@ -8,7 +8,7 @@ create_dir ".vim/bundle"
 
 git_clone "https://github.com/gmarik/Vundle.vim.git" ".vim/bundle/Vundle.vim"
 
-link_file "vim/vimrc" ".vimrc"
-link_file "vim/gvimrc" ".gvimrc"
+link_file "vimrc" ".vimrc"
+link_file "gvimrc" ".gvimrc"
 
-cmd vim -e -c "set more" -S "$SOURCE_PATH/vim/bootstrap.vim"
+cmd vim -e -c "set more" -S "$CURRENT_MODULE_PATH/bootstrap.vim"

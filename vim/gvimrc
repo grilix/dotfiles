@@ -4,4 +4,4 @@ set guioptions=egm
 set linespace=4
 set guitablabel=%M%t
 set guifont=PT Mono:h12
-colorscheme solarized
+colorscheme pyte
