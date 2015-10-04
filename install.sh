@@ -137,16 +137,19 @@ inject_line() { file_path=$1; line=$2
     debug "Skipping change to $file_path."
     return
   fi
-  cmd echo "$line" >> "$file_path"
+
+  pretend "RUN: echo $line >> $file_path" || {
+    echo "$line" >> "$file_path"
+  }
 }
 export -f inject_line
 
 cmd() {
   pretend "RUN: $@" || {
     if [ "$DEBUG" = "0" ]; then
-      $("$@") > /dev/null
+      "$@" > /dev/null
     else
-      $("$@")
+      "$@"
     fi
   }
 }
