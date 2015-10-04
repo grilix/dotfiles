@@ -131,9 +131,9 @@ export -f link_file
 cmd() {
   pretend "RUN: $@" || {
     if [ "$DEBUG" = "0" ]; then
-      $@ > /dev/null
+      $("$@") > /dev/null
     else
-      $@
+      $("$@")
     fi
   }
 }
