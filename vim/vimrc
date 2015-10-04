@@ -46,6 +46,7 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 let NERDTreeChDirMode=2
+set nocompatible
 
 " visual shifting (does not exit Visual mode)
 vnoremap < <gv
@@ -72,7 +73,6 @@ set colorcolumn=80
 set showfulltag
 set timeout timeoutlen=1000 ttimeoutlen=100
 
-set nocompatible
 set cpoptions=Acdesmq$
 syntax on
 
