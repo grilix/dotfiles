@@ -128,6 +128,19 @@ link_file() { src=$1; destination=$2
 }
 export -f link_file
 
+inject_line() { file_path=$1; line=$2
+  if [ ! -e "$file_path" ]; then
+    error "File $file_path does not exist"
+  fi
+
+  if grep "$line" "$file_path" > /dev/null; then
+    debug "Skipping change to $file_path."
+    return
+  fi
+  cmd echo "$line" >> "$file_path"
+}
+export -f inject_line
+
 cmd() {
   pretend "RUN: $@" || {
     if [ "$DEBUG" = "0" ]; then
@@ -189,4 +202,5 @@ done
 if [ "$CUSTOM_MODULES" = "0" ]; then
   install_module "vim"
   install_module "git"
+  install_module "bash"
 fi
