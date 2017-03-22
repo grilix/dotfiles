@@ -56,6 +56,15 @@ noremap Q <Nop>
 map <F2> :NERDTreeToggle<RETURN>
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
+" Disable Up arrow
+imap OA <Nop>
+" Disable Down arrow
+imap OB <Nop>
+" Disable Left arrow
+imap OC <Nop>
+" Disable Right arrow
+imap OD <Nop>
+" Again.. a
 imap <Up> <Nop>
 imap <Down> <Nop>
 inoremap <Cr> <Esc>
