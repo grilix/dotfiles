@@ -5,26 +5,52 @@ set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
 Bundle 'gmarik/Vundle.vim'
+
+Plugin 'mhinz/vim-startify'
+Bundle 'ervandew/supertab'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'sjl/gundo.vim.git'
+Bundle 'airblade/vim-gitgutter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
+Bundle 'Xuyuanp/nerdtree-git-plugin'
 Bundle 'scrooloose/nerdcommenter'
-" Bundle 'szw/vim-tags'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'kien/ctrlp.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
-Bundle 'vim-scripts/lojban'
-Bundle 'groenewege/vim-less'
-"Bundle 'majutsushi/tagbar'
+Bundle 'scrooloose/syntastic'
 "Bundle 'ScrollColors'
-Bundle 'jelera/vim-javascript-syntax'
 " Colors
 Plugin 'flazz/vim-colorschemes'
 Bundle 'pyte'
 Plugin 'industrial'
+" Clojure treats
+Bundle 'fireplace.vim'
+Bundle 'junegunn/rainbow_parentheses.vim'
+
+Bundle 'bling/vim-airline'
+"Bundle 'powerline/powerline'
+
+" File syntax
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'elzr/vim-json'
+Plugin 'ekalinin/dockerfile.vim'
+
+Bundle 'szw/vim-tags'
+Bundle 'tpope/vim-dispatch'
+
+if &term == "screen-256color"
+  let &t_SI = "\<Esc>[3 q"
+  let &t_EI = "\<Esc>[0 q"
+endif
+
+augroup rainbow_lisp
+  autocmd!
+  autocmd FileType lisp,clojure,scheme RainbowParentheses
+augroup END
 
 " let g:vim_tags_project_tags_command = "/usr/local/Cellar/ctags/5.8/bin/ctags --sort=yes -R {OPTIONS} {DIRECTORY} 2>/dev/null &"
-" let g:vim_tags_auto_generate = 1
+"let g:vim_tags_auto_generate = 1
 
 filetype plugin indent on " required!?
 autocmd BufRead,BufNewFile * set indentkeys=0{,0},0),0],!^F,o,O,e
@@ -41,11 +67,57 @@ let g:ctrlp_max_files=4000
 "let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py|vendor'
 let g:ctrlp_dotfiles = 0
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ 'Modified'  : '✹',
+    \ 'Staged'    : '✚',
+    \ 'Untracked' : '✭',
+    \ 'Renamed'   : '➜',
+    \ 'Unmerged'  : '═',
+    \ 'Deleted'   : '✖',
+    \ 'Dirty'     : '✗',
+    \ 'Clean'     : '✔︎',
+    \ 'Ignored'   : '☒',
+    \ 'Unknown'   : '?'
+    \ }
+
+"let g:NERDTreeIndicatorMapCustom = {
+"    \ 'Modified'  : '✹',
+"    \ 'Staged'    : '✚',
+"    \ 'Untracked' : '✭',
+"    \ 'Renamed'   : '➜',
+"    \ 'Unmerged'  : '═',
+"    \ 'Deleted'   : '✖',
+"    \ 'Dirty'     : '✗',
+"    \ 'Clean'     : '✔︎',
+"    \ 'Ignored'   : '☒',
+"    \ 'Unknown'   : '?'
+"    \ }
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn)|vendor|tmp|public|data)$',
   \ }
 
-let NERDTreeChDirMode=2
 set nocompatible
 
 " visual shifting (does not exit Visual mode)
@@ -53,8 +125,17 @@ vnoremap < <gv
 vnoremap > >gv
 noremap Q <Nop>
 
-map <F2> :NERDTreeToggle<RETURN>
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
+"let g:vimfiler_as_default_explorer = 1
+"map <F2> :VimFilerExplorer<RETURN>
+
+let NERDTreeQuitOnOpen=1
+let NERDTreeChDirMode=2
+nnoremap <F2> :NERDTreeToggle<RETURN>
+nnoremap <Leader>a :NERDTreeToggle<RETURN>
+"map <Leader>n <plug>NERDTreeTabsToggle<CR>
+let g:nerdtree_tabs_autofind=1
+
+nnoremap <F5> :GundoToggle<CR>
 
 " Disable Up arrow
 imap OA <Nop>
@@ -67,12 +148,15 @@ imap OD <Nop>
 " Again.. a
 imap <Up> <Nop>
 imap <Down> <Nop>
+imap <Left> <Nop>
+imap <Right> <Nop>
 inoremap <Cr> <Esc>
+nnoremap <Cr> i<Cr><Esc>
 inoremap <Esc> a<Bs><Esc>u
 vmap <Up> k
 vmap <Down> j
-map <Left> h
-map <Right> l
+vmap <Left> h
+vmap <Right> l
 
 noremap . .`[
 
@@ -82,7 +166,7 @@ set colorcolumn=80
 set showfulltag
 set timeout timeoutlen=1000 ttimeoutlen=100
 
-set cpoptions=Acdesmq$
+set cpoptions=Adq$
 syntax on
 
 set encoding=utf-8
@@ -93,7 +177,7 @@ set clipboard+=unnamed
 set fileformats=unix,dos,mac
 set nohidden
 set iskeyword+=_,$,@,%,#
-set mouse=a
+set mouse=n
 
 set hlsearch
 set incsearch
@@ -129,4 +213,4 @@ autocmd! bufwritepost .vimrc source %
 
 set t_Co=256
 set background=light
-colorscheme pyte
+colorscheme CandyPaper

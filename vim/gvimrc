@@ -1,7 +1,11 @@
+let NERDTreeQuitOnOpen=0
+
 set scrolloff=3
 set showtabline=2
 set guioptions=egm
-set linespace=2
-set guitablabel=%M%t
-set guifont=Monospace\ 10
+set linespace=3
+set guitablabel=%M\ %t
+"set guifont=Nimbus\ Mono\ L\ Bold\ 11
+"set guifont=Monoid\ \Light\ Semi-Condensed\ 14
+set guifont=Fira\ Code\ Light\ 14
 colorscheme colorzone
