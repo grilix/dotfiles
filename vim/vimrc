@@ -49,6 +49,10 @@ augroup rainbow_lisp
   autocmd FileType lisp,clojure,scheme RainbowParentheses
 augroup END
 
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'jh17/Spacegray.vim'
+
+
 " let g:vim_tags_project_tags_command = "/usr/local/Cellar/ctags/5.8/bin/ctags --sort=yes -R {OPTIONS} {DIRECTORY} 2>/dev/null &"
 "let g:vim_tags_auto_generate = 1
 
@@ -67,6 +71,7 @@ let g:ctrlp_max_files=4000
 "let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py|vendor'
 let g:ctrlp_dotfiles = 0
 
+let g:airline#extensions#branch#enabled = 0
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -137,13 +142,17 @@ let g:nerdtree_tabs_autofind=1
 
 nnoremap <F5> :GundoToggle<CR>
 
+set t_ku=OA
+set t_kd=OB
+set t_kr=OC
+set t_kl=OD
 " Disable Up arrow
 imap OA <Nop>
 " Disable Down arrow
 imap OB <Nop>
-" Disable Left arrow
-imap OC <Nop>
 " Disable Right arrow
+imap OC <Nop>
+" Disable Left arrow
 imap OD <Nop>
 " Again.. a
 imap <Up> <Nop>
@@ -153,6 +162,7 @@ imap <Right> <Nop>
 inoremap <Cr> <Esc>
 nnoremap <Cr> i<Cr><Esc>
 inoremap <Esc> a<Bs><Esc>u
+
 vmap <Up> k
 vmap <Down> j
 vmap <Left> h
@@ -166,7 +176,7 @@ set colorcolumn=80
 set showfulltag
 set timeout timeoutlen=1000 ttimeoutlen=100
 
-set cpoptions=Adq$
+set cpoptions=Adq$-
 syntax on
 
 set encoding=utf-8
@@ -178,6 +188,7 @@ set fileformats=unix,dos,mac
 set nohidden
 set iskeyword+=_,$,@,%,#
 set mouse=n
+set t_ut=
 
 set hlsearch
 set incsearch

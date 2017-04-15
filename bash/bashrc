@@ -2,4 +2,8 @@
 PS1='\[\e[0;32m\]\h\[\e[m\]:\[\e[1;34m\]\W\[\e[m\]\[\e[1;32m\]\$\[\e[m\] \[\e[m\]'
 
 export HISTCONTROL=ignoreboth:erasedups
+TERM="xterm-256color"
+alias tmux='tmux -2'
+
+# User specific aliases and functions
 unset command_not_found_handle
