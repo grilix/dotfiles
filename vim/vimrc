@@ -1,62 +1,54 @@
-set enc=utf-8
-
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
-Bundle 'gmarik/Vundle.vim'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-dispatch'
 
 Plugin 'mhinz/vim-startify'
-Bundle 'ervandew/supertab'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'sjl/gundo.vim.git'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
-Bundle 'Xuyuanp/nerdtree-git-plugin'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'ctrlpvim/ctrlp.vim'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/syntastic'
-"Bundle 'ScrollColors'
-" Colors
-Plugin 'flazz/vim-colorschemes'
-Bundle 'pyte'
-Plugin 'industrial'
-" Clojure treats
-Bundle 'fireplace.vim'
-Bundle 'junegunn/rainbow_parentheses.vim'
+Plugin 'ervandew/supertab'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'sjl/gundo.vim.git'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/syntastic'
 
-Bundle 'bling/vim-airline'
-"Bundle 'powerline/powerline'
+" Colors
+Plugin 'chumakd/ScrollColors'
+Plugin 'flazz/vim-colorschemes'
+
+" Clojure treats
+Plugin 'fireplace.vim'
+Plugin 'junegunn/rainbow_parentheses.vim'
+
+Plugin 'bling/vim-airline'
+Plugin 'szw/vim-tags'
+Plugin 'skwp/vim-rspec'
+Plugin 'majutsushi/tagbar'
 
 " File syntax
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'elzr/vim-json'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'elzr/vim-json'
 Plugin 'ekalinin/dockerfile.vim'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'arcticicestudio/nord-vim'
 
-Bundle 'szw/vim-tags'
-Bundle 'tpope/vim-dispatch'
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_start_level = 2
 
-if &term == "screen-256color"
-  let &t_SI = "\<Esc>[3 q"
-  let &t_EI = "\<Esc>[0 q"
-endif
+hi IndentGuidesOdd  ctermbg=None
+hi IndentGuidesEven ctermbg=black
 
 augroup rainbow_lisp
   autocmd!
   autocmd FileType lisp,clojure,scheme RainbowParentheses
 augroup END
 
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'jh17/Spacegray.vim'
-
-
-" let g:vim_tags_project_tags_command = "/usr/local/Cellar/ctags/5.8/bin/ctags --sort=yes -R {OPTIONS} {DIRECTORY} 2>/dev/null &"
-"let g:vim_tags_auto_generate = 1
-
-filetype plugin indent on " required!?
+"filetype plugin indent on " required!?
 autocmd BufRead,BufNewFile * set indentkeys=0{,0},0),0],!^F,o,O,e
 
 " lets ignore some shit directories
@@ -65,13 +57,13 @@ set wildignore+=*/vendor/*,*/tmp/*,*/data/*,*/log/*
 let g:ctrlp_working_path_mode = 'rac'
 let g:ctrlp_cache_dir='~/.vim/ctrlp_cache'
 let g:ctrlp_max_files=4000
-"let g:ctrlp_map = '<Leader>t'
-"let g:ctrlp_match_window_bottom = 0
-"let g:ctrlp_match_window_reversed = 0
-"let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py|vendor'
 let g:ctrlp_dotfiles = 0
 
 let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#csv#enabled = 0
+let g:airline#extensions#wordcount#enabled = 0
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -82,42 +74,6 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_javascript_checkers = ['eslint']
-
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_warning_symbol = '💩'
-
-let g:NERDTreeIndicatorMapCustom = {
-    \ 'Modified'  : '✹',
-    \ 'Staged'    : '✚',
-    \ 'Untracked' : '✭',
-    \ 'Renamed'   : '➜',
-    \ 'Unmerged'  : '═',
-    \ 'Deleted'   : '✖',
-    \ 'Dirty'     : '✗',
-    \ 'Clean'     : '✔︎',
-    \ 'Ignored'   : '☒',
-    \ 'Unknown'   : '?'
-    \ }
-
-"let g:NERDTreeIndicatorMapCustom = {
-"    \ 'Modified'  : '✹',
-"    \ 'Staged'    : '✚',
-"    \ 'Untracked' : '✭',
-"    \ 'Renamed'   : '➜',
-"    \ 'Unmerged'  : '═',
-"    \ 'Deleted'   : '✖',
-"    \ 'Dirty'     : '✗',
-"    \ 'Clean'     : '✔︎',
-"    \ 'Ignored'   : '☒',
-"    \ 'Unknown'   : '?'
-"    \ }
-
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn)|vendor|tmp|public|data)$',
@@ -130,49 +86,30 @@ vnoremap < <gv
 vnoremap > >gv
 noremap Q <Nop>
 
-"let g:vimfiler_as_default_explorer = 1
-"map <F2> :VimFilerExplorer<RETURN>
+noremap ]q :cnext<CR>
+noremap [q :cprev<CR>
 
 let NERDTreeQuitOnOpen=1
 let NERDTreeChDirMode=2
-nnoremap <F2> :NERDTreeToggle<RETURN>
+
 nnoremap <Leader>a :NERDTreeToggle<RETURN>
-"map <Leader>n <plug>NERDTreeTabsToggle<CR>
+nnoremap <Leader>t :TagbarOpenAutoClose<CR>
+nnoremap <Leader>u :GundoToggle<CR>
+
 let g:nerdtree_tabs_autofind=1
-
-nnoremap <F5> :GundoToggle<CR>
-
-set t_ku=OA
-set t_kd=OB
-set t_kr=OC
-set t_kl=OD
-" Disable Up arrow
-imap OA <Nop>
-" Disable Down arrow
-imap OB <Nop>
-" Disable Right arrow
-imap OC <Nop>
-" Disable Left arrow
-imap OD <Nop>
-" Again.. a
-imap <Up> <Nop>
-imap <Down> <Nop>
-imap <Left> <Nop>
-imap <Right> <Nop>
-inoremap <Cr> <Esc>
-nnoremap <Cr> i<Cr><Esc>
-inoremap <Esc> a<Bs><Esc>u
-
-vmap <Up> k
-vmap <Down> j
-vmap <Left> h
-vmap <Right> l
 
 noremap . .`[
 
-hi Search term=reverse ctermbg=Red ctermfg=White guibg=Red guifg=White
-highlight ColorColumn ctermbg=lightgray guibg=lightgray
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+
+"improve autocomplete menu color
+highlight Pmenu ctermbg=238 gui=bold
+
 set colorcolumn=80
+
 set showfulltag
 set timeout timeoutlen=1000 ttimeoutlen=100
 
@@ -188,7 +125,6 @@ set fileformats=unix,dos,mac
 set nohidden
 set iskeyword+=_,$,@,%,#
 set mouse=n
-set t_ut=
 
 set hlsearch
 set incsearch
@@ -216,12 +152,5 @@ set softtabstop=2
 set tabstop=8
 set smartcase
 
-"improve autocomplete menu color
-highlight Pmenu ctermbg=238 gui=bold
-
 " reload vim configuration on write
 autocmd! bufwritepost .vimrc source %
-
-set t_Co=256
-set background=light
-colorscheme CandyPaper

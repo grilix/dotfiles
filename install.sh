@@ -113,7 +113,6 @@ git_clone() { url="$1"; destination="$2"
 }
 export -f git_clone
 
-
 link_file() { src=$1; destination=$2
   if [ "$CURRENT_MODULE_PATH/$src" -ef "$INSTALL_PATH/$destination" ]; then
     forced || return
@@ -129,17 +128,17 @@ link_file() { src=$1; destination=$2
 export -f link_file
 
 inject_line() { file_path=$1; line=$2
-  if [ ! -e "$file_path" ]; then
-    error "File $file_path does not exist"
+  if [ ! -e "$INSTALL_PATH/$file_path" ]; then
+    error "File $INSTALL_PATH/$file_path does not exist"
   fi
 
-  if grep "$line" "$file_path" > /dev/null; then
-    debug "Skipping change to $file_path."
+  if grep "$line" "$INSTALL_PATH/$file_path" > /dev/null; then
+    debug "Skipping change to $INSTALL_PATH/$file_path."
     return
   fi
 
-  pretend "RUN: echo $line >> $file_path" || {
-    echo "$line" >> "$file_path"
+  pretend "RUN: echo $line >> $INSTALL_PATH/$file_path" || {
+    echo "$line" >> "$INSTALL_PATH/$file_path"
   }
 }
 export -f inject_line

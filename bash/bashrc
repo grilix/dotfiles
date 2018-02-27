@@ -2,7 +2,12 @@
 PS1='\[\e[0;32m\]\h\[\e[m\]:\[\e[1;34m\]\W\[\e[m\]\[\e[1;32m\]\$\[\e[m\] \[\e[m\]'
 
 export HISTCONTROL=ignoreboth:erasedups
-TERM="xterm-256color"
+
+# Our lovely linux terminal doesn't support 256 colors :(
+if [ "$TERM" != "linux" ]; then
+  TERM="xterm-256color"
+fi
+
 alias tmux='tmux -2'
 
 # User specific aliases and functions
