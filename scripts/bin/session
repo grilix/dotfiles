@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+WORKDIR=$1
+
+if [ -z "${WORKDIR}" ]; then
+  WORKDIR="${HOME}"
+fi
+RCFILE="${WORKDIR}/.tmuxrc"
+
+NAME=$(basename ${WORKDIR})
+
+new-session() {
+  tmux new-session -s "$1" -c "$2" -d
+}
+
+attach() {
+  tmux attach
+}
+
+if [ -f "${RCFILE}" ]; then
+  . "${RCFILE}"
+fi
+
+new-session "${NAME}" "${WORKDIR}"
+
+if [ "$TMUX" = "" ]; then
+  attach
+fi

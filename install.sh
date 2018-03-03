@@ -204,4 +204,5 @@ if [ "$CUSTOM_MODULES" = "0" ]; then
   install_module "git"
   install_module "bash"
   install_module "tmux"
+  install_module "scripts"
 fi
