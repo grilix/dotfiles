@@ -128,13 +128,11 @@ link_file() { src=$1; destination=$2
 export -f link_file
 
 inject_line() { file_path=$1; line=$2
-  if [ ! -e "$INSTALL_PATH/$file_path" ]; then
-    error "File $INSTALL_PATH/$file_path does not exist"
-  fi
-
-  if grep "$line" "$INSTALL_PATH/$file_path" > /dev/null; then
-    debug "Skipping change to $INSTALL_PATH/$file_path."
-    return
+  if [ -e "$INSTALL_PATH/$file_path" ]; then
+    if grep "$line" "$INSTALL_PATH/$file_path" > /dev/null; then
+      debug "Skipping change to $INSTALL_PATH/$file_path."
+      return
+    fi
   fi
 
   pretend "RUN: echo $line >> $INSTALL_PATH/$file_path" || {

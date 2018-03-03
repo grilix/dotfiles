@@ -1,3 +1,4 @@
+set enc=utf-8
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
@@ -79,6 +80,10 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn)|vendor|tmp|public|data)$',
   \ }
 
+let NERDTreeQuitOnOpen=1
+let NERDTreeChDirMode=2
+"let g:nerdtree_tabs_autofind=1
+
 set nocompatible
 
 " visual shifting (does not exit Visual mode)
@@ -89,16 +94,15 @@ noremap Q <Nop>
 noremap ]q :cnext<CR>
 noremap [q :cprev<CR>
 
-let NERDTreeQuitOnOpen=1
-let NERDTreeChDirMode=2
-
 nnoremap <Leader>a :NERDTreeToggle<RETURN>
 nnoremap <Leader>t :TagbarOpenAutoClose<CR>
 nnoremap <Leader>u :GundoToggle<CR>
 
-let g:nerdtree_tabs_autofind=1
-
 noremap . .`[
+
+inoremap <Cr> <Esc>
+nnoremap <Cr> i<Cr><Esc>
+inoremap <Esc> a<Bs><Esc>u
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
