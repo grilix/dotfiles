@@ -9,7 +9,7 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'mhinz/vim-startify'
 Plugin 'ervandew/supertab'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'sjl/gundo.vim.git'
+"Plugin 'sjl/gundo.vim.git'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -29,7 +29,7 @@ Plugin 'junegunn/rainbow_parentheses.vim'
 Plugin 'bling/vim-airline'
 Plugin 'szw/vim-tags'
 Plugin 'skwp/vim-rspec'
-Plugin 'majutsushi/tagbar'
+"Plugin 'majutsushi/tagbar'
 
 " File syntax
 Plugin 'jelera/vim-javascript-syntax'
@@ -102,7 +102,11 @@ noremap . .`[
 
 inoremap <Cr> <Esc>
 nnoremap <Cr> i<Cr><Esc>
-inoremap <Esc> a<Bs><Esc>u
+"inoremap <Esc> a<Bs><Esc>u
+" This seems to work way better than previous approach,
+" but it requires +backspace+ to not have 'start', which
+" is also great.
+inoremap <Esc>  <Esc>
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
@@ -121,7 +125,8 @@ set cpoptions=Adq$-
 syntax on
 
 set encoding=utf-8
-set backspace=indent,eol,start
+" Allow backspace to go over autoindents, but not more.
+set backspace=indent
 set nowritebackup
 set noswapfile
 set clipboard+=unnamed

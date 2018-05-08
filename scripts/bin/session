@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-WORKDIR=$1
-
-if [ -z "${WORKDIR}" ]; then
+if [ -z "$1" ]; then
   WORKDIR="${HOME}"
+else
+  WORKDIR=$(readlink -e $1)
 fi
+
 RCFILE="${WORKDIR}/.tmuxrc"
 
 NAME=$(basename ${WORKDIR})
