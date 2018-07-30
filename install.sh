@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+
 declare -x DEBUG="1"
 declare -x PRETEND="0"
 declare -x FORCE="0"
 declare -x BACKUP="1"
+# TODO: USE DOTFILES_PATH globally
 declare -x SOURCE_PATH="`pwd`"
+declare -x DOTFILES_PATH="`pwd`"
 declare -x INSTALL_PATH="`echo ~`"
 declare -x CURRENT_MODULE_PATH="$SOURCE_PATH"
 
@@ -141,6 +145,17 @@ inject_line() { file_path=$1; line=$2
 }
 export -f inject_line
 
+bundle_bash() {
+  TARGET_FILE="$CURRENT_MODULE_PATH/bashrc"
+  if [ ! -f "$TARGET_FILE" ]; then
+    echo "ERROR: File not found: $TARGET_FILE"
+    exit -1
+  fi
+
+  inject_line ".bashrc" "source '$TARGET_FILE'"
+}
+export -f bundle_bash
+
 cmd() {
   pretend "RUN: $@" || {
     if [ "$DEBUG" = "0" ]; then
@@ -200,9 +215,11 @@ do
 done
 
 if [ "$CUSTOM_MODULES" = "0" ]; then
+  install_module "base"
   install_module "vim"
   install_module "git"
   install_module "bash"
   install_module "tmux"
   install_module "scripts"
+  install_module "go"
 fi

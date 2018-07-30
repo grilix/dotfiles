@@ -8,7 +8,5 @@ if [ "$TERM" != "linux" ]; then
   TERM="xterm-256color"
 fi
 
-alias tmux='tmux -2'
-
 # User specific aliases and functions
 unset command_not_found_handle
