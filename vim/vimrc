@@ -16,7 +16,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 
 " Colors
 Plugin 'chumakd/ScrollColors'
@@ -37,6 +37,7 @@ Plugin 'elzr/vim-json'
 Plugin 'ekalinin/dockerfile.vim'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'arcticicestudio/nord-vim'
+Plugin 'fatih/vim-go'
 
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_start_level = 2
@@ -49,8 +50,11 @@ augroup rainbow_lisp
   autocmd FileType lisp,clojure,scheme RainbowParentheses
 augroup END
 
-"filetype plugin indent on " required!?
+filetype plugin indent on " required!?
 autocmd BufRead,BufNewFile * set indentkeys=0{,0},0),0],!^F,o,O,e
+
+autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd FileType c,cpp,objc noremap <buffer><Leader>cc :ClangFormat<CR>
 
 " lets ignore some shit directories
 set wildignore+=*/vendor/*,*/tmp/*,*/data/*,*/log/*
