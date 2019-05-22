@@ -4,6 +4,10 @@ if [ -z "$1" ]; then
   WORKDIR="${HOME}"
 else
   WORKDIR=$(readlink -e $1)
+  if [ -z "$WORKDIR" -o ! -d "$WORKDIR" ]; then
+    echo "ERROR: Not a directory: $1" >&2
+    exit 1
+  fi
 fi
 
 RCFILE="${WORKDIR}/.tmuxrc"

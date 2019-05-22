@@ -6,21 +6,21 @@ call vundle#rc()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-dispatch'
 
-Plugin 'mhinz/vim-startify'
-Plugin 'ervandew/supertab'
-Plugin 'nathanaelkane/vim-indent-guides'
-"Plugin 'sjl/gundo.vim.git'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ervandew/supertab'
+Plugin 'mhinz/vim-startify'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+"Plugin 'sjl/gundo.vim.git'
 Plugin 'tpope/vim-fugitive'
-"Plugin 'scrooloose/syntastic'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 " Colors
 Plugin 'chumakd/ScrollColors'
-Plugin 'flazz/vim-colorschemes'
+"Plugin 'flazz/vim-colorschemes'
 
 " Clojure treats
 Plugin 'fireplace.vim'
@@ -42,6 +42,10 @@ Plugin 'fatih/vim-go'
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_start_level = 2
 
+"let g:vim_tags_use_vim_dispatch = 1
+let g:vim_tags_use_vim_dispatch = 1
+let g:vim_tags_auto_generate = 0
+
 hi IndentGuidesOdd  ctermbg=None
 hi IndentGuidesEven ctermbg=black
 
@@ -53,40 +57,53 @@ augroup END
 filetype plugin indent on " required!?
 autocmd BufRead,BufNewFile * set indentkeys=0{,0},0),0],!^F,o,O,e
 
+autocmd BufNewFile,BufRead *.go setlocal listchars=tab:\ \ 
 autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType c,cpp,objc noremap <buffer><Leader>cc :ClangFormat<CR>
 
 " lets ignore some shit directories
 set wildignore+=*/vendor/*,*/tmp/*,*/data/*,*/log/*
 
+" Avoid loc-list poping up when saving go files
+" Let syntastic handle linting
+let g:go_fmt_fail_silently = 1
+
 let g:ctrlp_working_path_mode = 'rac'
 let g:ctrlp_cache_dir='~/.vim/ctrlp_cache'
 let g:ctrlp_max_files=4000
 let g:ctrlp_dotfiles = 0
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|node_modules|vendor|tmp|public|data)$',
+  \ }
 
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#csv#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0
 
+let g:airline_section_x = ''
+let g:airline_section_y = 'ss'
+let g:airline_skip_empty_sections = ''
+
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_loc_list_height = 5
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_check_on_wq = 0
 
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.(git|hg|svn)|vendor|tmp|public|data)$',
-  \ }
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
 
-let NERDTreeQuitOnOpen=1
-let NERDTreeChDirMode=2
-"let g:nerdtree_tabs_autofind=1
+let NERDTreeQuitOnOpen = 1
+let NERDTreeChDirMode = 2
+let NERDTreeMinimalUI = 1
 
 set nocompatible
 
@@ -98,6 +115,8 @@ noremap Q <Nop>
 noremap ]q :cnext<CR>
 noremap [q :cprev<CR>
 
+nnoremap <Leader>e :Hexplore!<RETURN>
+"nnoremap <Leader>a :Vexplore<RETURN>
 nnoremap <Leader>a :NERDTreeToggle<RETURN>
 nnoremap <Leader>t :TagbarOpenAutoClose<CR>
 nnoremap <Leader>u :GundoToggle<CR>
@@ -120,7 +139,7 @@ highlight link SyntasticStyleWarningSign SignColumn
 "improve autocomplete menu color
 highlight Pmenu ctermbg=238 gui=bold
 
-set colorcolumn=80
+set colorcolumn=100
 
 set showfulltag
 set timeout timeoutlen=1000 ttimeoutlen=100
@@ -166,4 +185,4 @@ set tabstop=8
 set smartcase
 
 " reload vim configuration on write
-autocmd! bufwritepost .vimrc source %
+"autocmd! bufwritepost .vimrc source %
