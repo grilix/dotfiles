@@ -66,8 +66,7 @@ elseif &term == "gnome-256color" || &term == "xterm-256color"
   set termguicolors
 end
 
-if &term == "screen-256color" || &term == "xterm-256-color"
-" if t_Co == 256 || t_Co == "truecolor"
+if &term == "screen-256color" || &term == "xterm-256color"
   if exists('$TMUX')
     let &t_SI = "\ePtmux;\e\e[5 q\e\\"
     let &t_EI = "\ePtmux;\e\e[2 q\e\\"
