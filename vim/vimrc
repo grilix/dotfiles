@@ -58,7 +58,10 @@ let g:ale_lint_on_text_changed = 'never'
 if $COLORTERM == "truecolor"
   set t_Co=truecolor
   set termguicolors
-elseif &term == "gnome-256color" || &term == "xterm-256color" || &term == "screen-256color"
+elseif &term == "screen-256color"
+  set t_Co=256
+  set notermguicolors
+elseif &term == "gnome-256color" || &term == "xterm-256color"
   set t_Co=256
   set termguicolors
 end
