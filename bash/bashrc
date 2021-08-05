@@ -1,8 +1,21 @@
+status-symbol() {
+  if [ "$?" == "0" ]; then
+    echo -e '\e[0;m>' # \e[0;30m>'
+  else
+    echo -e '\e[0;31m!'
+  fi
+}
+
 # Set colored prompt
-export PS1='\[\e[0;32m\]\h\[\e[m\]:\[\e[1;34m\]\W\[\e[m\]\[\e[1;32m\]\$\[\e[m\] \[\e[m\]'
+export PS1='\n  \[\e[0;32m\]\h\[\e[m\]`status-symbol`\[\e[1;34m\]\W\[\e[m\] \[\e[m\]: '
 
 export HISTCONTROL=ignoreboth:erasedups
 
+# if [ -e /usr/share/terminfo/x/xterm-truecolor ] && [ "$COLORTERM" == "xfce4-terminal" ]; then
+#   export TERM="xterm-truecolor"
+# else if [ -e /usr/share/terminfo/x/xterm-256color ] && [ "$COLORTERM" == "xfce4-terminal" ]; then
+#   export TERM="xterm-256color"
+# fi
 
 # User specific aliases and functions
 unset command_not_found_handle

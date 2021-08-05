@@ -39,7 +39,7 @@ Plugin 'elzr/vim-json'
 Plugin 'ekalinin/dockerfile.vim'
 " Plugin 'nanotech/jellybeans.vim'
 " Plugin 'arcticicestudio/nord-vim'
-" Plugin 'fatih/vim-go'
+Plugin 'fatih/vim-go'
 
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_start_level = 2
