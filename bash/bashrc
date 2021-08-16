@@ -1,13 +1,13 @@
 status-symbol() {
   if [ "$?" == "0" ]; then
-    echo -e '\e[0;m>' # \e[0;30m>'
+    echo -e '\e[0;m' # \e[0;30m>'
   else
-    echo -e '\e[0;31m!'
+    echo -e '\e[0;31m'
   fi
 }
 
 # Set colored prompt
-export PS1='\n  \[\e[0;32m\]\h\[\e[m\]`status-symbol`\[\e[1;34m\]\W\[\e[m\] \[\e[m\]: '
+export PS1='\n  \[\e[0;32m\]\h\[\e[m\]\[`status-symbol`\]:\[\e[1;34m\]\W\[\e[m\] '
 
 export HISTCONTROL=ignoreboth:erasedups
 
