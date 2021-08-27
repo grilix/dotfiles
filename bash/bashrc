@@ -6,6 +6,8 @@ status-symbol() {
   fi
 }
 
+export PATH="$PATH:$HOME/.local/bin"
+
 # Set colored prompt
 export PS1='\n  \[\e[0;32m\]\h\[\e[m\]\[`status-symbol`\]:\[\e[1;34m\]\W\[\e[m\] '
 
