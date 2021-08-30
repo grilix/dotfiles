@@ -32,7 +32,7 @@ UPLOAD_PKEY="y"
 if [ -z "$EMAIL" ]; then
   echo "Provee una dirección de email." >&2
   echo "Por ejemplo: " >&2
-  echo "  git-email $USER@$HOSTNAME" >&2
+  echo "  git-email $USER@`hostname -f`" >&2
   exit -1
 fi
 
