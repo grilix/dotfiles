@@ -24,6 +24,7 @@ check-err() {
 git config --local -l >/dev/null 2>&1
 check-err "Esta herramienta debe ser usada desde un repositorio git."
 
+KEY_DURATION="1y"
 EMAIL="$1"
 # Esto sube la clave pública a un servidor por conveniencia, cámbialo
 # si quieres evitarlo y la clave pública se escribirá en la salida estándar.
@@ -52,16 +53,16 @@ if [ -z "$FPR" ]; then
   echo "No se encontraron claves para la dirección de email $EMAIL, crearemos una nueva."
 
   RES=$(gpg --batch --passphrase '' \
-      --quick-generate-key "$NAME <$EMAIL>" rsa4096 cert 0 2>&1)
+      --quick-generate-key "$NAME <$EMAIL>" rsa4096 cert $KEY_DURATION 2>&1)
   check-err "$RES"
   FPR=$(get-key "$EMAIL")
   check-err "No se pudo obtener la clave para $EMAIL"
 
   RES=$(gpg --batch --passphrase '' \
-      --quick-add-key $FPR rsa4096 sign 2m 2>&1)
+      --quick-add-key $FPR rsa4096 sign $KEY_DURATION 2>&1)
   check-err "$RES"
   RES=$(gpg --batch --passphrase '' \
-      --quick-add-key $FPR rsa4096 encrypt 2m 2>&1)
+      --quick-add-key $FPR rsa4096 encrypt $KEY_DURATION 2>&1)
   check-err "$RES"
 
   if [ "$UPLOAD_PKEY" == "y" ]; then
