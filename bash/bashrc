@@ -1,6 +1,6 @@
-status-symbol() {
+status-color() {
   if [ "$?" == "0" ]; then
-    echo -e '\e[0;m' # \e[0;30m>'
+    echo -e '\e[0;m'
   else
     echo -e '\e[0;31m'
   fi
@@ -8,8 +8,15 @@ status-symbol() {
 
 export PATH="$PATH:$HOME/.local/bin"
 
-# Set colored prompt
-export PS1='\n  \[\e[0;32m\]\h\[\e[m\]\[`status-symbol`\]:\[\e[1;34m\]\W\[\e[m\] '
+PS1='\[\e[0;34m\]\u\[\e[2;34m\]@\[\e[0;32m\]\h'
+PS1+='\[\e[m\]:'
+PS1+='\[\e[1;34m\]\W\[\e[m\] \n'
+PS1+='\[`status-color`\]>\[\e[m\] '
+
+export PS1
+
+# Formato para `time`
+export TIMEFORMAT='r: %R, u: %U, s: %S'
 
 export HISTCONTROL=ignoreboth:erasedups
 
