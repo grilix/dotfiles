@@ -138,6 +138,7 @@ Probablemente quieras pegarla en sitios como github o gitlab:
 EOF
 fi
 
+git config --local log.showsignature true
 git config --local commit.gpgsign true
 git config --local user.signingkey $FPR
 git config --local user.email "$EMAIL"
