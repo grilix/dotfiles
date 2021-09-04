@@ -31,6 +31,11 @@ print-status() {
   NAME=$(git config --get user.name)
   EMAIL=$(git config --get user.email)
   FPR=$(git config --get user.signingkey)
+  SIGN=$(git config --get commit.gpgsign)
+
+  if [ "$SIGN" != "true" ]; then
+    echo "[!] La firma automática no está activada"
+  fi
 
   echo "Identidad: $NAME <$EMAIL>"
   echo "    Firma: $FPR"
@@ -133,5 +138,6 @@ Probablemente quieras pegarla en sitios como github o gitlab:
 EOF
 fi
 
+git config --local commit.gpgsign true
 git config --local user.signingkey $FPR
 git config --local user.email "$EMAIL"
