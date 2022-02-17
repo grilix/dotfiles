@@ -12,7 +12,7 @@ fi
 
 RCFILE="${WORKDIR}/.tmuxrc"
 
-NAME=$(basename ${WORKDIR})
+NAME=$(basename ${WORKDIR} | tr . _)
 
 new-session() {
   tmux new-session -s "$1" -c "$2" -d
