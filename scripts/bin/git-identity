@@ -35,10 +35,31 @@ print-status() {
 
   if [ "$SIGN" != "true" ]; then
     echo "[!] La firma automática no está activada"
+    exit -1
   fi
 
   echo "Identidad: $NAME <$EMAIL>"
   echo "    Firma: $FPR"
+}
+
+extend-key() {
+  NAME=$(git config --get user.name)
+  EMAIL=$(git config --get user.email)
+  FPR=$(git config --get user.signingkey)
+
+  echo "Identidad: $NAME <$EMAIL>"
+  echo "    Firma: $FPR"
+
+  #
+  # No sé qué onda esto, así creo que anda
+  SUBKEY=$(gpg --list-secret-keys \
+    --list-options show-unusable-subkeys \
+    --with-subkey-fingerprints "$EMAIL" | \
+    grep -A 1 '\[S\] \[expired: ' | \
+    grep -E '^\s+')
+
+  # No sé si pueden llegar a venir más de una subkey
+  gpg --quick-set-expire "$FPR" "1y" "$SUBKEY"
 }
 
 print-usage() {
@@ -61,7 +82,7 @@ EMAIL="$1"
 # si quieres evitarlo y la clave pública se escribirá en la salida estándar.
 UPLOAD_PKEY="y"
 
-while getopts ":hp" arg; do
+while getopts ":hpe" arg; do
   case $arg in
     h)
       print-usage
@@ -69,6 +90,10 @@ while getopts ":hp" arg; do
       ;;
     p)
       print-status
+      exit
+      ;;
+    e)
+      extend-key
       exit
       ;;
     ?)

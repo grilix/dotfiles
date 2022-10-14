@@ -60,7 +60,9 @@ if $COLORTERM == "truecolor"
   set termguicolors
 elseif &term == "screen-256color"
   set t_Co=256
-  set notermguicolors
+  set termguicolors
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 elseif &term == "gnome-256color" || &term == "xterm-256color"
   set t_Co=256
   set termguicolors
@@ -146,7 +148,7 @@ nnoremap <Leader>e :Hexplore!<RETURN>
 "nnoremap <Leader>a :Vexplore<RETURN>
 nnoremap <Leader>a :NERDTreeToggle<RETURN>
 nnoremap <Leader>t :TagbarOpenAutoClose<CR>
-nnoremap <Leader>u :GundoToggle<CR>
+"nnoremap <Leader>u :GundoToggle<CR>
 
 noremap . .`[
 
