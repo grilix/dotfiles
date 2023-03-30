@@ -1,7 +1,25 @@
 set enc=utf-8
+
+if empty($MYVIMRC) | let $MYVIMRC = expand('<sfile>:p') | endif
+
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_DATA_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
+
+set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+
+let g:netrw_home = $XDG_DATA_HOME."/vim"
+call mkdir($XDG_DATA_HOME."/vim/spell", 'p', 0700)
+
+set backupdir=$XDG_STATE_HOME/vim/backup | call mkdir(&backupdir, 'p', 0700)
+set directory=$XDG_STATE_HOME/vim/swap   | call mkdir(&directory, 'p', 0700)
+set undodir=$XDG_STATE_HOME/vim/undo     | call mkdir(&undodir,   'p', 0700)
+set viewdir=$XDG_STATE_HOME/vim/view     | call mkdir(&viewdir,   'p', 0700)
+
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#rc()
+set rtp+=$XDG_DATA_HOME/vim/bundle/Vundle.vim/
+call vundle#rc("$XDG_DATA_HOME/vim/bundle")
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-dispatch'
@@ -14,19 +32,22 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 " Plugin 'scrooloose/syntastic'
-Plugin 'w0rp/ale'
+
+"Esta mierda me rompe un poco los huevos
+"Plugin 'w0rp/ale'
 
 "Plugin 'sjl/gundo.vim.git'
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'lepture/vim-jinja'
 
 " Colors
 Plugin 'chumakd/ScrollColors'
 "Plugin 'flazz/vim-colorschemes'
 
 " Clojure treats
-Plugin 'fireplace.vim'
-Plugin 'junegunn/rainbow_parentheses.vim'
+"Plugin 'fireplace.vim'
+"Plugin 'junegunn/rainbow_parentheses.vim'
 
 Plugin 'bling/vim-airline'
 Plugin 'szw/vim-tags'
@@ -35,25 +56,37 @@ Plugin 'skwp/vim-rspec'
 
 " File syntax
 Plugin 'jelera/vim-javascript-syntax'
-Plugin 'elzr/vim-json'
+"Plugin 'elzr/vim-json'
 Plugin 'ekalinin/dockerfile.vim'
 " Plugin 'nanotech/jellybeans.vim'
 " Plugin 'arcticicestudio/nord-vim'
-Plugin 'fatih/vim-go'
+
+"Esto hace que se tranque todo cuando estoy editando archivos de go
+"Plugin 'fatih/vim-go'
+
+" let pluginsfile = $XDG_CONFIG_HOME/vim/plugins.vim
+" if filereadable(pluginsfile)
+"     execute 'source '.pluginsfile
+" endif
+
+let pluginsfile = "$XDG_DATA_HOME/vim/plugins.vim"
+if filereadable(pluginsfile)
+    execute 'source '.pluginsfile
+endif
 
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_start_level = 2
 
 "let g:vim_tags_use_vim_dispatch = 1
 let g:vim_tags_use_vim_dispatch = 1
-let g:vim_tags_auto_generate = 0
+let g:vim_tags_auto_generate = 1
 
 hi IndentGuidesOdd  ctermbg=None
 hi IndentGuidesEven ctermbg=black
 
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_text_changed = 'never'
+"let g:ale_lint_on_save = 1
+"let g:ale_lint_on_insert_leave = 0
+"let g:ale_lint_on_text_changed = 'never'
 
 if $COLORTERM == "truecolor"
   set t_Co=truecolor
@@ -99,7 +132,7 @@ set wildignore+=*/vendor/*,*/tmp/*,*/data/*,*/log/*
 let g:go_fmt_fail_silently = 1
 
 let g:ctrlp_working_path_mode = 'rac'
-let g:ctrlp_cache_dir='~/.vim/ctrlp_cache'
+let g:ctrlp_cache_dir="$XDG_CACHE_HOME/vim/ctrlp_cache"
 let g:ctrlp_max_files=4000
 let g:ctrlp_dotfiles = 0
 
@@ -133,6 +166,8 @@ let NERDTreeQuitOnOpen = 3
 let NERDTreeQuitOnOpen = 1
 let NERDTreeChDirMode = 2
 let NERDTreeMinimalUI = 1
+
+let g:vim_json_conceal = 0
 
 set nocompatible
 
