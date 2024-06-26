@@ -13,7 +13,7 @@ user-name() {
 }
 
 get-key() { EMAIL="$1";
-  gpg --list-options show-only-fpr-mbox --list-secret-keys 2>/dev/null |
+  LANG=C gpg --list-options show-only-fpr-mbox --list-secret-keys 2>/dev/null |
     grep "$EMAIL" |
     awk '{print $1}'
 }
@@ -52,12 +52,14 @@ extend-key() {
 
   #
   # No sé qué onda esto, así creo que anda
-  SUBKEY=$(gpg --list-secret-keys \
+  SUBKEY=$(LANG=C gpg --list-secret-keys \
     --list-options show-unusable-subkeys \
     --with-subkey-fingerprints "$EMAIL" | \
     grep -A 1 '\[S\] \[expired: ' | \
     grep -E '^\s+')
 
+  # TODO: Puede que necesitemos extender la clave además de la subclave
+  # echo gpg --quick-set-expire "$FPR" "1y"
   # No sé si pueden llegar a venir más de una subkey
   gpg --quick-set-expire "$FPR" "1y" "$SUBKEY"
 }
@@ -67,6 +69,7 @@ cat <<USAGE
 Opciones:
   -h Muestra esta información
   -p Muestra la identidad en uso
+  -e Extender clave
 
 Cambiar la identidad en uso:
   $(basename $0) $USER@`hostname -f`
